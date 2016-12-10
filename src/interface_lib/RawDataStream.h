@@ -31,7 +31,7 @@ class RawDataStream {
 public:
     RawDataStream() {};
 
-    virtual ~RawDataStream();
+    virtual ~RawDataStream() = default;
 
     /*
      * Reads raw data from a stream
