@@ -1,0 +1,3 @@
+/Users/markus/Entwicklung/CPP_Spielwiese/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/markus/Entwicklung/CPP_Spielwiese/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/markus/Entwicklung/CPP_Spielwiese/cmake-build-debug/CMakeFiles/CPP_Spielwiese.dir
