@@ -87,17 +87,34 @@ public:
             return static_cast<int> (readBytes_return_code::end_of_stream);
         }
 
+        constexpr char bit_align_mark[bit_align_mark_length] = {0x00, 0x00, 0x00, 0x00, (char) (0x80)};
+
+        auto remove_mark = [] () {
+
+        };
 
         for (int shift = 0; shift < CHAR_BIT; ++shift) {
-            auto order_mark = search_for_align_mark(read_buffer.cbegin(), read_buffer.cend());
-            if (order_mark != read_buffer.cend()) {
-                //TODO remove the mark
+            auto shifted = shift_multi_byte(read_buffer,shift);
+            auto order_mark = search_for_align_mark(shifted.cbegin(), shifted.cend());
+
+            if (order_mark != shifted.cend()) {
+                remove_mark();
+                read_buffer = shifted;
+                break;
+            }
+
+            shifted = shift_multi_byte(read_buffer,-shift);
+            order_mark = search_for_align_mark(shifted.cbegin(), shifted.cend());
+
+            if (order_mark != shifted.cend()) {
+                remove_mark();
+                read_buffer = shifted;
                 break;
             }
         }
+        memcpy(buffer,read_buffer.data(),read_count);
 
-
-        return static_cast<int> (readBytes_return_code::no_data);
+        return read_count;
     }
 
     RawDataStreamImplementation(std::unique_ptr<std::istream> &&stream)
@@ -105,6 +122,7 @@ public:
 
     template<typename Iterator_t>
     static auto search_for_align_mark(Iterator_t first, Iterator_t last) -> Iterator_t {
+        constexpr char bit_align_mark[bit_align_mark_length] = {0x00, 0x00, 0x00, 0x00, (char) (0x80)};
         if (std::distance(first, last) < bit_align_mark_length)
             return last;
         for (auto window_end = first + bit_align_mark_length - 1; window_end != last; ++first, ++window_end) {
