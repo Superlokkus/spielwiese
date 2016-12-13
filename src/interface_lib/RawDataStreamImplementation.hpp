@@ -24,7 +24,7 @@ public:
     };
 
     static constexpr unsigned bit_align_mark_length = 5;
-    static constexpr char bit_align_mark[bit_align_mark_length] = {0x00, 0x00, 0x00, 0x00, (char) (0x80)};
+    static constexpr std::array<char, bit_align_mark_length> bit_align_mark = {0x00, 0x00, 0x00, 0x00, (char) (0x80)};
     static constexpr unsigned read_block_size = 7; //Prime so the probability is low to always read in the middle of bit align marks
 
     /*! @param shift_by 8 < value < 8, value > 0 means right shift, value < 0 is left shift
@@ -89,8 +89,8 @@ public:
 
 
         for (int shift = 0; shift < CHAR_BIT; ++shift) {
-            auto order_mark = search_for_align_mark(read_buffer.cbegin(), read_buffer.cend());
-            if (order_mark != read_buffer.cend()) {
+            auto order_mark = search_for_align_mark(read_buffer.data(), read_buffer.data() + read_buffer.size());
+            if (order_mark != read_buffer.data() + read_buffer.size()) {
                 //TODO remove the mark
                 break;
             }
@@ -103,8 +103,8 @@ public:
     RawDataStreamImplementation(std::unique_ptr<std::istream> &&stream)
             : RawDataStream(), byte_stream_(std::move(stream)) {}
 
-    template<typename Iterator_t>
-    static auto search_for_align_mark(Iterator_t first, Iterator_t last) -> Iterator_t {
+    static auto search_for_align_mark(char *first, char *last) -> char * {
+
         if (std::distance(first, last) < bit_align_mark_length)
             return last;
         for (auto window_end = first + bit_align_mark_length - 1; window_end != last; ++first, ++window_end) {
