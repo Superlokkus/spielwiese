@@ -14,6 +14,7 @@
 #include <algorithm>
 #include <deque>
 #include <bitset>
+#include <iterator>
 
 class RawDataStreamImplementation : public RawDataStream {
 public:
@@ -26,6 +27,9 @@ public:
     static constexpr char bit_align_mark[bit_align_mark_length] = {0x00, 0x00, 0x00, 0x00, (char) (0x80)};
     static constexpr unsigned read_block_size = 7; //Prime so the probability is low to always read in the middle of bit align marks
 
+    /*! @param shift_by 8 < value < 8, value > 0 means right shift, value < 0 is left shift
+       *
+       */
     template<size_t N, typename CHAR_T = unsigned char>
     static std::array<CHAR_T, N> shift_multi_byte(const std::array<CHAR_T, N> &to_shift, const int shift_by) {
         std::array<unsigned char, N + 2> check_buffer = {};
@@ -83,17 +87,14 @@ public:
             return static_cast<int> (readBytes_return_code::end_of_stream);
         }
 
-        auto check_for_misalign = [](const std::array<unsigned char, read_block_size> &read_buffer) -> unsigned {
-            //bit shift range from 0 in both -/+infty
-            //Check for mark
-            std::array<unsigned char, read_block_size + 2> check_buffer = {};
-            memcpy(check_buffer.data() + 1, read_buffer.data(), read_buffer.size());
 
-            /*! @param shift_by 8 < value < 8, value > 0 means right shift, value < 0 is left shift
-             *
-             */
-
-        };
+        for (int shift = 0; shift < CHAR_BIT; ++shift) {
+            auto order_mark = search_for_align_mark(read_buffer.cbegin(), read_buffer.cend());
+            if (order_mark != read_buffer.cend()) {
+                //TODO remove the mark
+                break;
+            }
+        }
 
 
         return static_cast<int> (readBytes_return_code::no_data);
@@ -101,6 +102,22 @@ public:
 
     RawDataStreamImplementation(std::unique_ptr<std::istream> &&stream)
             : RawDataStream(), byte_stream_(std::move(stream)) {}
+
+    template<typename Iterator_t>
+    static auto search_for_align_mark(Iterator_t first, Iterator_t last) -> Iterator_t {
+        if (std::distance(first, last) < bit_align_mark_length)
+            return last;
+        for (auto window_end = first + bit_align_mark_length - 1; window_end != last; ++first, ++window_end) {
+            if (*first == bit_align_mark[0]
+                && *(first + 1) == bit_align_mark[1]
+                && *(first + 2) == bit_align_mark[2]
+                && *(first + 3) == bit_align_mark[3]
+                && *(first + 4) == bit_align_mark[4]) {
+                return first;
+            }
+        }
+        return last;
+    }
 
 private:
     std::unique_ptr<std::istream> byte_stream_;
