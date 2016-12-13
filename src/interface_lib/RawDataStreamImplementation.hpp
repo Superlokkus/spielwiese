@@ -26,6 +26,43 @@ public:
     static constexpr char bit_align_mark[bit_align_mark_length] = {0x00, 0x00, 0x00, 0x00, (char) (0x80)};
     static constexpr unsigned read_block_size = 7; //Prime so the probability is low to always read in the middle of bit align marks
 
+    template<size_t N, typename CHAR_T = unsigned char>
+    static std::array<CHAR_T, N> shift_multi_byte(const std::array<CHAR_T, N> &to_shift, const int shift_by) {
+        std::array<unsigned char, N + 2> check_buffer = {};
+        memcpy(check_buffer.data() + 1, to_shift.data(), to_shift.size());
+        if (shift_by > 0) {
+            unsigned char *current = check_buffer.data() + N; //So we got to the last valid value
+            for (int i = 0; i < N; ++i) {
+                *current >>= shift_by;//current shifted
+                unsigned char buffer = 0;//gotta get the carry from left
+                unsigned char mask = 1 << shift_by;
+                mask -= 1; //mask the n bits
+                buffer = *(current - 1) & mask;
+                buffer <<= shift_by; //maybe bug, CHAR_BIT - shift_by
+                *current |= buffer;
+                current -= 1;
+            }
+        } else if (shift_by < 0) {
+            const int n = std::abs(shift_by);
+            unsigned char *current = check_buffer.data();
+            for (int i = 0; i < N; ++i) {
+                *current <<= n;
+                unsigned char buffer = 0;
+                unsigned char mask = 1 << n;
+                mask -= 1;
+                mask <<= CHAR_BIT - n;
+                buffer = *(current + 1) & mask;
+                buffer >>= CHAR_BIT - n;
+                *current |= buffer;
+                current += 1;
+            }
+        }
+        std::array<CHAR_T, N> final_values = {};
+        memcpy(final_values.data(), check_buffer.data() + 1, N * sizeof(CHAR_T));
+        return final_values;
+    }
+
+
     virtual int readBytes(unsigned char *buffer, int num_bytes) override {
         if (num_bytes <= 0) {
             return 0;
@@ -55,36 +92,7 @@ public:
             /*! @param shift_by 8 < value < 8, value > 0 means right shift, value < 0 is left shift
              *
              */
-            auto shift_multi_byte = [&](const int shift_by) {
 
-                if (shift_by > 0) {
-                    unsigned char *current = check_buffer.data() + read_block_size; //So we got to the last valid value
-                    for (int i = 0; i < read_block_size; ++i) {
-                        *current >>= shift_by;//current shifted
-                        unsigned char buffer = 0;//gotta get the carry from left
-                        unsigned char mask = 1 << shift_by;
-                        mask -= 1; //mask the n bits
-                        buffer = *(current - 1) & mask;
-                        buffer <<= shift_by; //maybe bug, CHAR_BIT - shift_by
-                        *current |= buffer;
-                        current -= 1;
-                    }
-                } else if (shift_by < 0) {
-                    const int n = std::abs(shift_by);
-                    unsigned char *current = check_buffer.data();
-                    for (int i = 0; i < read_block_size; ++i) {
-                        *current <<= n;
-                        unsigned char buffer = 0;
-                        unsigned char mask = 1 << n;
-                        mask -= 1;
-                        mask <<= CHAR_BIT - n;
-                        buffer = *(current + 1) & mask;
-                        buffer >>= CHAR_BIT - n;
-                        *current |= buffer;
-                        current += 1;
-                    }
-                }
-            };
         };
 
 

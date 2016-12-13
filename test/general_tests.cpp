@@ -55,4 +55,15 @@ BOOST_AUTO_TEST_CASE(Task_Example) {
     BOOST_CHECK_GT(fixture.read_return_code, 0);
 }
 
+BOOST_AUTO_TEST_CASE(Mutli_Byte_Shift) {
+    std::array<unsigned char, 11> in = {0x65, 0x50, 0x00, 0x00, 0x00, 0x00, 0x04, 0x00, 0x08, 0x10, 0x18};
+
+    auto out = RawDataStreamImplementation::shift_multi_byte(in, 3);
+
+    std::array<unsigned char, 11> supposed{0x0C, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x80, 0x01, 0x02, 0x03};
+
+    BOOST_CHECK(in == RawDataStreamImplementation::shift_multi_byte(in, 0));
+    BOOST_CHECK(out == supposed);
+}
+
 
