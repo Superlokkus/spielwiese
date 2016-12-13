@@ -42,7 +42,7 @@ public:
                 unsigned char mask = 1 << shift_by;
                 mask -= 1; //mask the n bits
                 buffer = *(current - 1) & mask;
-                buffer <<= shift_by; //maybe bug, CHAR_BIT - shift_by
+                buffer <<= CHAR_BIT - shift_by;
                 *current |= buffer;
                 current -= 1;
             }

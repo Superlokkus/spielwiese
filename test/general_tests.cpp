@@ -60,7 +60,7 @@ BOOST_AUTO_TEST_CASE(Mutli_Byte_Shift) {
 
     auto out = RawDataStreamImplementation::shift_multi_byte(in, 3);
 
-    std::array<unsigned char, 11> supposed{0x0C, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x80, 0x01, 0x02, 0x03};
+    std::array<unsigned char, 11> supposed{0x0C, 0xAA, 0x00,0x00, 0x00, 0x00, 0x00, 0x80, 0x01, 0x02, 0x03};
 
     BOOST_CHECK(in == RawDataStreamImplementation::shift_multi_byte(in, 0));
     BOOST_CHECK(out == supposed);
