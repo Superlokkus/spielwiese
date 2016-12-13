@@ -46,19 +46,43 @@ public:
             return static_cast<int> (readBytes_return_code::end_of_stream);
         }
 
-        auto check_for_misalign = [](const std::array<char, read_block_size> &read_buffer) -> unsigned {
+        auto check_for_misalign = [](const std::array<unsigned char, read_block_size> &read_buffer) -> unsigned {
             //bit shift range from 0 in both -/+infty
             //Check for mark
-            std::array<char, read_block_size + 2> check_buffer = {};
+            std::array<unsigned char, read_block_size + 2> check_buffer = {};
             memcpy(check_buffer.data() + 1, read_buffer.data(), read_buffer.size());
 
-            /*! @param shift_by 8 < Value < 8
+            /*! @param shift_by 8 < value < 8, value > 0 means right shift, value < 0 is left shift
              *
              */
-            auto shift_multi_byte = [&](int shift_by) {
-                char *first = check_buffer.data() + 1;
-                if (shift_by > 0) {
+            auto shift_multi_byte = [&](const int shift_by) {
 
+                if (shift_by > 0) {
+                    unsigned char *current = check_buffer.data() + read_block_size; //So we got to the last valid value
+                    for (int i = 0; i < read_block_size; ++i) {
+                        *current >>= shift_by;//current shifted
+                        unsigned char buffer = 0;//gotta get the carry from left
+                        unsigned char mask = 1 << shift_by;
+                        mask -= 1; //mask the n bits
+                        buffer = *(current - 1) & mask;
+                        buffer <<= shift_by; //maybe bug, CHAR_BIT - shift_by
+                        *current |= buffer;
+                        current -= 1;
+                    }
+                } else if (shift_by < 0) {
+                    const int n = std::abs(shift_by);
+                    unsigned char *current = check_buffer.data();
+                    for (int i = 0; i < read_block_size; ++i) {
+                        *current <<= n;
+                        unsigned char buffer = 0;
+                        unsigned char mask = 1 << n;
+                        mask -= 1;
+                        mask <<= CHAR_BIT - n;
+                        buffer = *(current + 1) & mask;
+                        buffer >>= CHAR_BIT - n;
+                        *current |= buffer;
+                        current += 1;
+                    }
                 }
             };
         };
