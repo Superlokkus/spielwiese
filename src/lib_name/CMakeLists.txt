@@ -5,11 +5,8 @@ set(lib_name_implementation_files
         ${CMAKE_CURRENT_SOURCE_DIR}/src/lib.cpp
         )
 
-set(lib_name_header_files
-        ${CMAKE_CURRENT_SOURCE_DIR}/include/lib.hpp
-        )
 
-add_library(lib_name ${lib_name_implementation_files} ${lib_name_header_files})
+add_library(lib_name ${lib_name_implementation_files})
 set_property(TARGET lib_name PROPERTY LINKER_LANGUAGE CXX)
 set_property(TARGET lib_name PROPERTY CXX_STANDARD 14)
 
