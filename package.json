@@ -1,0 +1,11 @@
+{
+  "name": "mk_node_js",
+  "version": "1.0.0",
+  "description": "Markus node js module",
+  "author": "Markus Klemm",
+  "license": "ISC",
+  "dependencies": {
+    "cmake-js": "^3.6.2",
+    "nan": "^2.10.0"
+  }
+}
