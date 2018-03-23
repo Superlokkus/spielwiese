@@ -4,6 +4,10 @@
 
 #include <lib.hpp>
 
-int lib::foo() {
-    return 5;
+NAN_METHOD(CalculateSync) {
+    // expect a number as the first argument
+    int points = info[0]->Uint32Value();
+    double est = points*5;
+
+    info.GetReturnValue().Set(est);
 }

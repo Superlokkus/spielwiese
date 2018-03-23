@@ -5,10 +5,12 @@
   "author": "Markus Klemm",
   "license": "ISC",
   "dependencies": {
+    "bindings": "^1.3.0",
     "cmake-js": "^3.6.2",
     "nan": "^2.10.0"
   },
   "scripts": {
     "install": "cmake-js compile"
-  }
+  },
+  "main": "index.js"
 }
