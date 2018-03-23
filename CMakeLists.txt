@@ -12,13 +12,5 @@ add_subdirectory(${PROJECT_SOURCE_DIR}/lib_name)
 
 add_subdirectory(${PROJECT_SOURCE_DIR}/interface_lib)
 
-add_executable(main ${PROJECT_SOURCE_DIR}/main.cpp)
-
-set_property(TARGET main PROPERTY LINKER_LANGUAGE CXX)
-set_property(TARGET main PROPERTY CXX_STANDARD 14)
-
-target_link_libraries(main interface_lib)
-target_link_libraries(main lib_name)
-
 enable_testing()
 add_subdirectory(test)
