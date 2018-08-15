@@ -20,5 +20,8 @@ set_property(TARGET main PROPERTY CXX_STANDARD 14)
 target_link_libraries(main interface_lib)
 target_link_libraries(main lib_name)
 
+set(TEST_ENABLED TRUE CACHE BOOL "Tests are enabled")
+if (${TEST_ENABLED})
 enable_testing()
 add_subdirectory(test)
+endif()
