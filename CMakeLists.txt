@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.0)
 enable_testing()
 
 find_package(Boost REQUIRED COMPONENTS unit_test_framework)
+#find_package(Boost REQUIRED) doesnt show this problems
 include_directories(${Boost_INCLUDE_DIR})
 
 add_executable(general_tests general_tests.cpp)
