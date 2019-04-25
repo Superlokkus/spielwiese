@@ -1,9 +1,9 @@
-//
-// Created by Markus Klemm on 14.03.18.
-//
-
 #include <lib.hpp>
 
-int lib::foo() {
+int lib_name::lib::foo() {
+    return foo2();
+}
+
+int foo2() {
     return 5;
 }

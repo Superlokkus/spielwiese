@@ -1,9 +1,8 @@
 #include <iostream>
-#include <interface_lib.hpp>
-#include <lib.hpp>
+#include <lib_name/lib_name.hpp>
 
 int main() {
-    lib a;
+    lib_name::lib a;
     std::cout << a.foo() << std::endl;
     return 0;
 }

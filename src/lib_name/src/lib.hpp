@@ -1,14 +1,8 @@
-//
-// Created by Markus Klemm on 14.03.18.
-//
-
 #ifndef CPP_SPIELWIESE_LIB_HPP
 #define CPP_SPIELWIESE_LIB_HPP
 
+#include <lib_name/lib_name.hpp>
 
-struct lib {
-    int foo();
-};
-
+int foo2();
 
 #endif //CPP_SPIELWIESE_LIB_HPP
