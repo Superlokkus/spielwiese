@@ -1,6 +1,12 @@
 cmake_minimum_required(VERSION 3.0)
 project(lib_name VERSION 1.0)
 
+string(TOUPPER ${PROJECT_NAME} PROJECT_NAME_UPPER_CASE)
+configure_file(
+        ${PROJECT_NAME}_version.hpp.in
+        ${PROJECT_SOURCE_DIR}/include/${PROJECT_NAME}/${PROJECT_NAME}_version.hpp
+)
+
 set(${PROJECT_NAME}_implementation_files
         src/lib.cpp
         )
