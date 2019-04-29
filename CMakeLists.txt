@@ -29,3 +29,8 @@ if (${TEST_ENABLED})
     endforeach (testSrc)
 endif ()
 
+install(TARGETS ${PROJECT_NAME}
+        RUNTIME
+        DESTINATION bin)
+
+include(CPack)
