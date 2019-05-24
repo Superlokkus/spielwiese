@@ -1,0 +1,17 @@
+{
+  "name": "spielwiese",
+  "version": "1.0.0",
+  "description": "Boilerplate project",
+  "dependencies": {
+    "bindings": "^1.5.0",
+    "cmake-js": "^5.2.0",
+    "mocha": "^6.1.4",
+    "node-addon-api": "^1.6.3"
+  },
+  "main": "build/Release/spielwiese.node",
+  "private": true,
+  "scripts": {
+    "install": "cmake-js compile",
+    "test": "mocha tests"
+  }
+}
