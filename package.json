@@ -8,6 +8,14 @@
     "mocha": "^6.1.4",
     "node-addon-api": "^1.6.3"
   },
+    "cmake-js": {
+    "runtime": "electron",
+    "runtimeVersion": "3.1.9"
+  },
+    "devDependencies": {
+    "electron": "^3.0.0",
+    "typescript": "^3.4.5"
+  },
   "main": "build/Release/spielwiese.node",
   "private": true,
   "scripts": {
