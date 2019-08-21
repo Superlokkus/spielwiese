@@ -215,10 +215,10 @@ cliui@^4.0.0:
     strip-ansi "^4.0.0"
     wrap-ansi "^2.0.0"
 
-cmake-js@^5.2.0:
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/cmake-js/-/cmake-js-5.2.0.tgz#6d72014269a5d23a754a6d170cde9ed2d75eb411"
-  integrity sha512-/HLhzoBEOLKGdE1FLwH5ggzRt67AWTb4IErg4rm+bTC+R0DKUobojDyp17dSswDVPosdoPmHXjKxbJiyBZfQeg==
+cmake-js@^5.3.1:
+  version "5.3.1"
+  resolved "https://registry.yarnpkg.com/cmake-js/-/cmake-js-5.3.1.tgz#abd4cfeb4bf3f587f8ff4d827e834edc78f8db41"
+  integrity sha512-TYx8CHlhZbCH0vn3vvylV5jlTyDi5mGJJ5LlpcZAYRABtC0fVB7TcGEb25OCG6fMZm7qh9yyzMbHdlzt6wH7KQ==
   dependencies:
     bluebird "^3"
     debug "^4"
