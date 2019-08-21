@@ -4,12 +4,9 @@
   "description": "Boilerplate project",
   "dependencies": {
     "bindings": "^1.5.0",
-    "cmake-js": "^5.3.1",
+    "cmake-js": "https://github.com/cmake-js/cmake-js.git#master",
     "mocha": "^6.2.0",
     "node-addon-api": "^1.7.1"
-  },
-  "cmake-js": {
-    "arch": "x64"
   },
   "main": "build/Release/spielwiese.node",
   "private": true,
