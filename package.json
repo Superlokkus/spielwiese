@@ -8,6 +8,9 @@
     "mocha": "^6.2.0",
     "node-addon-api": "^1.7.1"
   },
+  "cmake-js": {
+    "arch": "x64"
+  },
   "main": "build/Release/spielwiese.node",
   "private": true,
   "scripts": {
