@@ -1,13 +1,21 @@
+Spielwiese
+==============
+
+Bare modern C++ project template
+
+Build & Test
+--------
 ```
-git submodule update  --init --recursive
+git submodule update --init --recursive
 mkdir bin
 cd bin
 cmake -DCMAKE_BUILD_TYPE=Release ..
 cmake --build . --config Release
-ctest
+ctest -C Release
 ```
 
-
+Boost
+----------
 ```
 cd /tmp/
 git clone https://github.com/boostorg/boost.git
@@ -17,3 +25,15 @@ git submodule update  --init --recursive
 ./b2 
 ./b2 install
 ``` 
+
+CMake Tricks
+-----------------------
+
+You may have explicitly specify the build system generator, e.g.
+```
+-G"Visual Studio 15 2017 Win64"
+```
+or adjust the cmake search path to find the dependencies, e.g.
+```
+-DCMAKE_PREFIX_PATH="C:\Boost" -DCMAKE_PREFIX_PATH="C:\Qt\5.12.2\msvc2017_64"
+```
