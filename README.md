@@ -1,7 +1,6 @@
-Spielwiese
+Lauda measurement drivers
 ==============
 
-Bare modern C++ project template
 
 Build & Test
 --------
