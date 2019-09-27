@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-project(lauda_drivers VERSION 0.1)
+project(CPP_Spielwiese VERSION 1.0)
 
 set(TEST_ENABLED TRUE CACHE BOOL "Tests are enabled")
 if (${TEST_ENABLED})
