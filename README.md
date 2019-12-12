@@ -33,6 +33,10 @@ You may have explicitly specify the build system generator, e.g.
 ```
 -G"Visual Studio 15 2017 Win64"
 ```
+Or just choose the command set since VS 2019:
+```
+-A"Win32" 
+```
 or adjust the cmake search path to find the dependencies, e.g.
 ```
 -DCMAKE_PREFIX_PATH="C:\Boost" -DCMAKE_PREFIX_PATH="C:\Qt\5.12.2\msvc2017_64"
