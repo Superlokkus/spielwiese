@@ -5,5 +5,5 @@ int lib_name::lib::foo() {
 }
 
 int foo2() {
-    return 5;
+    return static_map.cbegin()->second;
 }
