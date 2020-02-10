@@ -9,7 +9,8 @@ Napi::String Method(const Napi::CallbackInfo &info) {
 }
 
 Napi::Object Init(Napi::Env env, Napi::Object exports) {
-    exports.Set(Napi::String::New(env, "hello"),
+    lib_name::lib l;
+    exports.Set(Napi::Number::New(env, l.foo()),
                 Napi::Function::New(env, Method));
     return exports;
 }

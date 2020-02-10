@@ -4,8 +4,8 @@ const addon = require('bindings')('spielwiese');
 let assert = require("assert");
 
 describe("Spielwiese Addon", function () {
-    it("should return 'world'", function () {
+    it("should return 1337'", function () {
         const result = addon.hello();
-        assert.equal(result, "world");
+        assert.equal(result, 1337);
     });
 });
