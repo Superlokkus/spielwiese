@@ -6,7 +6,7 @@
 namespace lib_name {
 
     struct lib {
-        int foo();
+        double foo();
     };
 
 }
