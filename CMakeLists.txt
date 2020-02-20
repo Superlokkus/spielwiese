@@ -44,6 +44,10 @@ if (NOT CMAKE_JS_INC)
     parse_cmakejs_properties()
 endif ()
 
+if (NOT WIN32)
+    set(BUILD_SHARED_LIBS TRUE)
+endif ()
+
 add_subdirectory(src/lib_name)
 
 include_directories(${CMAKE_JS_INC})
