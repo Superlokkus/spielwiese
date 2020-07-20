@@ -8,12 +8,15 @@ endif ()
 
 add_subdirectory(${PROJECT_SOURCE_DIR}/src/lib_name)
 
-add_executable(${PROJECT_NAME} src/main.cpp)
+find_package(Boost COMPONENTS python REQUIRED)
+find_package (Python COMPONENTS Development REQUIRED)
+
+Python_add_library(${PROJECT_NAME} MODULE src/main.cpp)
 
 set_property(TARGET ${PROJECT_NAME} PROPERTY LINKER_LANGUAGE CXX)
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE lib_name)
+target_link_libraries(${PROJECT_NAME} PRIVATE lib_name Boost::boost Boost::python)
 
 if (${TEST_ENABLED})
     find_package(Boost COMPONENTS system REQUIRED)
@@ -28,9 +31,5 @@ if (${TEST_ENABLED})
         add_test(NAME ${PROJECT_NAME}_${testName} COMMAND ${PROJECT_NAME}_${testName} -m HRF -l warning --build_info)
     endforeach (testSrc)
 endif ()
-
-install(TARGETS ${PROJECT_NAME}
-        RUNTIME
-        DESTINATION bin)
 
 include(CPack)
