@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.0)
 project(lib_name VERSION 1.0)
 
+find_package(OpenSSL)
+
 string(TOUPPER ${PROJECT_NAME} PROJECT_NAME_UPPER_CASE)
 configure_file(
         ${PROJECT_NAME}_version.hpp.in
@@ -23,6 +25,8 @@ target_include_directories(${PROJECT_NAME}
         PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src
         )
+
+target_link_libraries(${PROJECT_NAME} PRIVATE OpenSSL::SSL)
 
 install(TARGETS ${PROJECT_NAME}
         ARCHIVE
