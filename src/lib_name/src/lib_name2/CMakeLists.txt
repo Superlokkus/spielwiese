@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
-project(lib_name VERSION 1.0)
+project(lib_name2 VERSION 1.0)
 
 string(TOUPPER ${PROJECT_NAME} PROJECT_NAME_UPPER_CASE)
 configure_file(
@@ -15,13 +15,6 @@ set(${PROJECT_NAME}_implementation_files
 add_library(${PROJECT_NAME} ${${PROJECT_NAME}_implementation_files})
 set_property(TARGET ${PROJECT_NAME} PROPERTY LINKER_LANGUAGE CXX)
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
-
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/lib_name2)
-target_link_libraries(
-        ${PROJECT_NAME}
-        PUBLIC
-        lib_name2
-)
 
 target_include_directories(${PROJECT_NAME}
         PUBLIC
