@@ -8,12 +8,14 @@ endif ()
 
 add_subdirectory(${PROJECT_SOURCE_DIR}/src/lib_name)
 
+find_package(SDL2 REQUIRED)
+
 add_executable(${PROJECT_NAME} src/main.cpp)
 
 set_property(TARGET ${PROJECT_NAME} PROPERTY LINKER_LANGUAGE CXX)
-set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
+set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 20)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE lib_name)
+target_link_libraries(${PROJECT_NAME} PRIVATE SDL2::SDL2 SDL2::SDL2main)
 
 if (${TEST_ENABLED})
     find_package(Boost COMPONENTS system REQUIRED)
