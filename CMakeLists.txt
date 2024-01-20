@@ -1,5 +1,9 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.11)
 project(CPP_Spielwiese VERSION 1.0)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
+
+#set(CMAKE_CXX_CLANG_TIDY clang-tidy -p)
 
 set(TEST_ENABLED TRUE CACHE BOOL "Tests are enabled")
 if (${TEST_ENABLED})
@@ -23,7 +27,7 @@ if (${TEST_ENABLED})
     foreach (testSrc ${${PROJECT_NAME}_test_src})
         get_filename_component(testName ${testSrc} NAME_WE)
         add_executable(${PROJECT_NAME}_${testName} ${testSrc})
-        set_property(TARGET ${PROJECT_NAME}_${testName} PROPERTY CXX_STANDARD 14)
+        set_property(TARGET ${PROJECT_NAME}_${testName} PROPERTY CXX_STANDARD 17)
         target_link_libraries(${PROJECT_NAME}_${testName} Boost::boost lib_name)
         add_test(NAME ${PROJECT_NAME}_${testName} COMMAND ${PROJECT_NAME}_${testName} -m HRF -l warning --build_info)
     endforeach (testSrc)
